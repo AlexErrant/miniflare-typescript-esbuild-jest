@@ -2,6 +2,8 @@ const { COUNTER } = getMiniflareBindings();
 const id = COUNTER.newUniqueId();
 const stub = COUNTER.get(id);
 
+import { parse, parse as uuidParse, stringify as uuidStringify } from "uuid";
+
 // Note this is beforeAll, not beforeEach, yet each test still has isolated storage.
 // See https://v2.miniflare.dev/jest.html#isolated-storage for more details.
 beforeAll(async () => {
@@ -10,6 +12,7 @@ beforeAll(async () => {
 });
 
 test("should increment count", async () => {
+  let output = parse("7E2868DA-59C3-40EE-A2C7-D2446F678A79")
   const res = await stub.fetch(new Request("http://localhost/increment"));
   expect(await res.text()).toContain("⬆️ 6");
 });
